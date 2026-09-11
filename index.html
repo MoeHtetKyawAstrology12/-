@@ -343,17 +343,19 @@ document.getElementById('copyAgainBtn').addEventListener('click', async () => {
 });
 
 /*
-  FIX: mobile browsers (iOS Safari / Chrome especially) only allow a
-  custom-scheme redirect like "viber://..." when it happens SYNCHRONOUSLY
-  inside the click handler, still tied to the user's tap. The previous
-  code did `await copyToClipboard(message)` FIRST, which breaks that
-  "user gesture" chain — by the time window.location.href ran, the browser
-  no longer trusted it as a direct result of the tap, so it silently
-  blocked the Viber app-open. Clipboard copy was fine, but auto-redirect
-  never fired.
+  FIX (round 2): the previous version tried to guess whether Viber opened
+  by checking document.hidden after 1.5s. That guess is unreliable on
+  modern iOS Safari / Android Chrome: tapping a custom-scheme link like
+  "viber://..." now shows a native "Open in Viber?" confirmation popup
+  first. While that popup is showing, the page does NOT count as hidden —
+  it only becomes hidden once the user actually taps "Open". So on a real
+  phone with Viber installed, our 1.5s timeout almost always fired before
+  the user had tapped anything, and we wrongly told them "Viber couldn't
+  open" even though it was about to open fine.
 
-  Fix: kick off the viber:// redirect immediately, synchronously, then
-  do the clipboard copy right after (not awaited before the redirect).
+  Fix: stop guessing. Just trigger the redirect + copy, then show one
+  message that's accurate either way (asks them to tap "Open" if the
+  popup appears, and reminds them the message is already copied).
 */
 document.getElementById('viberBtn').addEventListener('click', () => {
   if (!currentBook) return;
@@ -366,18 +368,7 @@ document.getElementById('viberBtn').addEventListener('click', () => {
   // Copy can happen right after — doesn't need to block the redirect.
   copyToClipboard(message);
 
-  let appOpened = false;
-  const onVis = () => { if (document.hidden) appOpened = true; };
-  document.addEventListener('visibilitychange', onVis);
-  setTimeout(async () => {
-    document.removeEventListener('visibilitychange', onVis);
-    if (appOpened || document.hidden) {
-      showToast('✅ Viber ဖွင့်နေပါပြီ။ Chat box မှာ paste (Ctrl+V) လုပ်ပါ။');
-    } else {
-      await copyToClipboard(VIBER_NUMBER);
-      showToast(`📋 Viber မဖွင့်နိုင်ပါ။ ဖုန်းနံပါတ် "${VIBER_NUMBER}" ကို copy ပြီးပါပြီ။`, 6000);
-    }
-  }, 1500);
+  showToast('📋 Message ကို copy ပြီးပါပြီ။ "Open in Viber?" popup ပေါ်လာရင် Open ကိုနှိပ်ပြီး chat box မှာ paste (Ctrl+V) လုပ်ပါ။', 6000);
 });
 
 function fallbackCopyDialog(text) {
