@@ -14,14 +14,13 @@
     padding-bottom: 40px;
   }
 
-  /* ===== Header — ဖန်ခရမ်း / ပန်းရောင် ===== */
+  /* ===== Header ===== */
   header {
     background: linear-gradient(135deg, #c2185b 0%, #e91e63 45%, #f06292 100%);
     color: #fff;
     padding: 34px 20px 28px;
     text-align: center;
     box-shadow: 0 4px 16px rgba(194, 24, 91, 0.35);
-    position: relative;
   }
   header h1 {
     font-size: 1.7rem;
@@ -29,10 +28,7 @@
     line-height: 1.6;
     text-shadow: 0 2px 6px rgba(0,0,0,0.28);
   }
-  header p {
-    font-size: 0.95rem;
-    opacity: 0.95;
-  }
+  header p { font-size: 0.95rem; opacity: 0.95; }
 
   /* ===== Search ===== */
   .search-wrap {
@@ -75,20 +71,16 @@
     padding: 0 15px;
   }
 
-  /* ===== Grid — ၅ အုပ်တန်း × ၄ တန်း = 20 ===== */
+  /* ===== Grid — ၄ တန်း × ၅ အုပ် = 20 ===== */
   .book-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 22px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
   }
-
-  @media (max-width: 1100px) {
-    .book-grid { grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 950px) {
+    .book-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
   }
-  @media (max-width: 850px) {
-    .book-grid { grid-template-columns: repeat(3, 1fr); }
-  }
-  @media (max-width: 600px) {
+  @media (max-width: 620px) {
     .book-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   }
 
@@ -107,7 +99,7 @@
     box-shadow: 0 10px 26px rgba(194,24,91,0.22);
   }
 
-  /* ===== CSS Book Cover ===== */
+  /* ===== Book Cover ===== */
   .book-cover {
     position: relative;
     width: 100%;
@@ -120,8 +112,6 @@
     overflow: hidden;
     background: linear-gradient(135deg, var(--c1, #6b3e1e), var(--c2, #b8860b));
   }
-
-  /* စာအုပ်ကျောရိုး (spine) */
   .book-cover::before {
     content: "";
     position: absolute;
@@ -131,8 +121,6 @@
     box-shadow: inset -2px 0 4px rgba(0,0,0,0.25);
     z-index: 1;
   }
-
-  /* စာအုပ်အလင်းပြန်မှု (glossy shine) */
   .book-cover::after {
     content: "";
     position: absolute;
@@ -146,7 +134,7 @@
     z-index: 1;
   }
 
-  /* ===== မြန်မာ့ရိုးရာ ကနုတ်ဘောင် (Kanote Frame) ===== */
+  /* ===== ကနုတ်ဘောင် ===== */
   .kanote-frame {
     position: absolute;
     inset: 10px 10px 10px 18px;
@@ -155,8 +143,6 @@
     pointer-events: none;
     z-index: 2;
   }
-
-  /* အတွင်းဘောင် (double line) */
   .kanote-frame::before {
     content: "";
     position: absolute;
@@ -164,64 +150,21 @@
     border: 1px solid rgba(255, 235, 200, 0.55);
     border-radius: 2px;
   }
-
-  /* ကနုတ်ပန်း ထောင့်လေးခု (corners) */
-  .kanote-frame::after {
-    content: "";
-    position: absolute;
-    inset: -3px;
-    background:
-      /* ထောင့်အပေါ်ဘယ် */
-      radial-gradient(circle at 0% 0%, rgba(255,235,200,0.95) 3px, transparent 4px),
-      /* ထောင့်အပေါ်ညာ */
-      radial-gradient(circle at 100% 0%, rgba(255,235,200,0.95) 3px, transparent 4px),
-      /* ထောင့်အောက်ဘယ် */
-      radial-gradient(circle at 0% 100%, rgba(255,235,200,0.95) 3px, transparent 4px),
-      /* ထောင့်အောက်ညာ */
-      radial-gradient(circle at 100% 100%, rgba(255,235,200,0.95) 3px, transparent 4px);
-    background-repeat: no-repeat;
-    background-size: 16px 16px;
-  }
-
-  /* ကနုတ်ပန်း ထောင့်အပန်းအလှ (curved flourish) */
   .kanote-corner {
     position: absolute;
-    width: 22px;
-    height: 22px;
+    width: 22px; height: 22px;
     border: 1.5px solid rgba(255, 235, 200, 0.9);
     z-index: 3;
     pointer-events: none;
   }
-  .kanote-corner.tl {
-    top: 6px; left: 14px;
-    border-right: none;
-    border-bottom: none;
-    border-top-left-radius: 12px;
-  }
-  .kanote-corner.tr {
-    top: 6px; right: 6px;
-    border-left: none;
-    border-bottom: none;
-    border-top-right-radius: 12px;
-  }
-  .kanote-corner.bl {
-    bottom: 6px; left: 14px;
-    border-right: none;
-    border-top: none;
-    border-bottom-left-radius: 12px;
-  }
-  .kanote-corner.br {
-    bottom: 6px; right: 6px;
-    border-left: none;
-    border-top: none;
-    border-bottom-right-radius: 12px;
-  }
+  .kanote-corner.tl { top: 6px; left: 14px; border-right: none; border-bottom: none; border-top-left-radius: 12px; }
+  .kanote-corner.tr { top: 6px; right: 6px; border-left: none; border-bottom: none; border-top-right-radius: 12px; }
+  .kanote-corner.bl { bottom: 6px; left: 14px; border-right: none; border-top: none; border-bottom-left-radius: 12px; }
+  .kanote-corner.br { bottom: 6px; right: 6px; border-left: none; border-top: none; border-bottom-right-radius: 12px; }
 
-  /* ထောင့်အလယ် အစက်လေး (dot accents) */
   .kanote-dot {
     position: absolute;
-    width: 5px;
-    height: 5px;
+    width: 5px; height: 5px;
     background: rgba(255, 235, 200, 0.95);
     border-radius: 50%;
     z-index: 3;
@@ -240,15 +183,14 @@
     opacity: 0.95;
     margin-top: 6px;
   }
-
   .cover-title {
     position: relative;
     z-index: 4;
     text-align: center;
-    font-size: 1rem;
+    font-size: 1.05rem;
     font-weight: 700;
     line-height: 1.45;
-    padding: 0 8px;
+    padding: 0 10px;
     text-shadow: 0 2px 6px rgba(0,0,0,0.55);
     flex: 1;
     display: flex;
@@ -256,12 +198,11 @@
     justify-content: center;
     overflow: hidden;
   }
-
   .cover-author {
     position: relative;
     z-index: 4;
     text-align: center;
-    font-size: 0.68rem;
+    font-size: 0.7rem;
     opacity: 0.95;
     margin-bottom: 6px;
     font-style: italic;
@@ -269,13 +210,13 @@
 
   /* ===== Book Info ===== */
   .book-info {
-    padding: 11px 12px 14px;
+    padding: 12px 14px 15px;
     flex: 1;
     display: flex;
     flex-direction: column;
   }
   .book-title {
-    font-size: 0.92rem;
+    font-size: 0.95rem;
     font-weight: 700;
     color: #2c2c2c;
     line-height: 1.4;
@@ -286,12 +227,12 @@
     overflow: hidden;
   }
   .book-author {
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     color: #7a7a7a;
     margin-bottom: 6px;
   }
   .book-price {
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: #c2185b;
     font-weight: 700;
     margin-bottom: 10px;
@@ -301,10 +242,10 @@
     text-align: center;
     background: linear-gradient(135deg, #c2185b, #f06292);
     color: #fff;
-    padding: 9px;
+    padding: 10px;
     border-radius: 6px;
     text-decoration: none;
-    font-size: 0.88rem;
+    font-size: 0.9rem;
     font-weight: 600;
     transition: 0.2s;
     cursor: pointer;
@@ -337,11 +278,13 @@
   .modal-box {
     background: #fff;
     border-radius: 14px;
-    max-width: 400px;
+    max-width: 430px;
     width: 100%;
     padding: 26px 22px;
     text-align: center;
     animation: pop 0.25s ease;
+    max-height: 90vh;
+    overflow-y: auto;
   }
   @keyframes pop {
     from { transform: scale(0.85); opacity: 0; }
@@ -349,14 +292,27 @@
   }
   .modal-box h3 {
     font-size: 1.05rem;
-    margin-bottom: 6px;
+    margin-bottom: 14px;
     color: #c2185b;
     line-height: 1.5;
   }
-  .modal-box p {
+  .book-summary {
+    background: #fdf4f8;
+    border-left: 3px solid #e91e63;
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+    text-align: left;
     font-size: 0.88rem;
+    line-height: 1.7;
+  }
+  .book-summary .lbl { color: #999; display: inline-block; min-width: 90px; }
+  .book-summary .val { color: #2c2c2c; font-weight: 600; }
+
+  .modal-box p {
+    font-size: 0.85rem;
     color: #666;
-    margin-bottom: 18px;
+    margin-bottom: 14px;
   }
   .contact-btn {
     display: block;
@@ -369,8 +325,12 @@
     font-size: 0.95rem;
     color: #fff;
     transition: 0.2s;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    text-align: center;
   }
-  .contact-btn:hover { opacity: 0.88; }
+  .contact-btn:hover { opacity: 0.9; }
   .viber { background: #7360f2; }
   .telegram { background: #229ed9; }
   .close-btn {
@@ -382,6 +342,30 @@
     font-size: 0.9rem;
     font-family: inherit;
     padding: 8px;
+  }
+
+  /* ===== Toast Notification ===== */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #2c2c2c;
+    color: #fff;
+    padding: 14px 22px;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    opacity: 0;
+    transition: transform 0.3s, opacity 0.3s;
+    z-index: 200;
+    max-width: 90%;
+    text-align: center;
+    line-height: 1.5;
+  }
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
   }
 </style>
 </head>
@@ -408,13 +392,16 @@
 <!-- Contact Modal -->
 <div class="modal" id="contactModal">
   <div class="modal-box">
-    <h3 id="modalBookTitle">စာအုပ်ဝယ်ယူရန်</h3>
+    <h3>📖 စာအုပ်ဝယ်ယူရန်</h3>
+
+    <div class="book-summary" id="bookSummary"></div>
+
     <p>အောက်ပါ နည်းလမ်းများဖြင့် ဆက်သွယ်ဝယ်ယူနိုင်ပါတယ်</p>
 
-    <a class="contact-btn viber" id="viberLink" href="#">
+    <button class="contact-btn viber" id="viberBtn">
       ☎️ Viber: 09699459935
-    </a>
-    <a class="contact-btn telegram" id="telegramLink" href="#">
+    </button>
+    <a class="contact-btn telegram" id="telegramLink" href="#" target="_blank">
       🆔 Telegram: @moehtetkyaw9799
     </a>
 
@@ -422,9 +409,18 @@
   </div>
 </div>
 
-<script>
-let allBooks = [];
+<!-- Toast -->
+<div class="toast" id="toast"></div>
 
+<script>
+const VIBER_NUMBER = '09699459935';
+const VIBER_NUMBER_INTL = '959699459935';   // + မပါဘဲ
+const TELEGRAM_USER = 'moehtetkyaw9799';
+
+let allBooks = [];
+let currentBook = null;
+
+/* ===== Data load ===== */
 async function loadBooks() {
   try {
     const res = await fetch('list.json');
@@ -438,6 +434,7 @@ async function loadBooks() {
   }
 }
 
+/* ===== Render books ===== */
 function renderBooks() {
   const keyword = document.getElementById('searchInput').value.trim().toLowerCase();
   const grid = document.getElementById('bookGrid');
@@ -457,7 +454,7 @@ function renderBooks() {
   }
   noResult.style.display = 'none';
 
-  filtered.forEach((book) => {
+  filtered.forEach((book, idx) => {
     const c1 = book.color1 || '#6b3e1e';
     const c2 = book.color2 || '#b8860b';
 
@@ -482,11 +479,14 @@ function renderBooks() {
         <div class="book-title">${book.title}</div>
         <div class="book-author">✍️ ${book.author}</div>
         <div class="book-price">💰 ${formatPrice(book.price)} ကျပ်</div>
-        <button class="buy-btn" onclick="openModal('${escapeQuote(book.title)}')">
+        <button class="buy-btn" data-idx="${idx}">
           🛒 ဝယ်မည်
         </button>
       </div>
     `;
+    // index ကို ပြန်ရှာဖို့ data attribute သုံး (အမည်ထဲမှာ quote ရှိလည်း ပြဿနာမရှိ)
+    const btn = card.querySelector('.buy-btn');
+    btn.addEventListener('click', () => openModal(book));
     grid.appendChild(card);
   });
 }
@@ -495,35 +495,21 @@ function formatPrice(p) {
   return Number(p || 0).toLocaleString('en-US');
 }
 
-function escapeQuote(str) {
-  return String(str).replace(/'/g, "\\'").replace(/"/g, '&quot;');
-}
+/* ===== Modal ===== */
+function openModal(book) {
+  currentBook = book;
 
-/* ===== Modal ဖွင့် + Viber/Telegram လင့် ===== */
-function openModal(title) {
-  document.getElementById('modalBookTitle').textContent = `📖 "${title}" ဝယ်ယူရန်`;
+  // စာအုပ်အချက်အလက် summary
+  document.getElementById('bookSummary').innerHTML = `
+    <div><span class="lbl">📕 စာအုပ်</span>: <span class="val">${book.title}</span></div>
+    <div><span class="lbl">✍️ စာရေးဆရာ</span>: <span class="val">${book.author}</span></div>
+    <div><span class="lbl">💰 ဈေးနှုန်း</span>: <span class="val">${formatPrice(book.price)} ကျပ်</span></div>
+  `;
 
-  const msg = encodeURIComponent(`မင်္ဂလာပါ၊ "${title}" စာအုပ် ဝယ်ချင်ပါတယ်။`);
-
-  /* Viber — ဖုန်းနံပါတ်ကို နိုင်ငံတကာ format (+959...) နဲ့ ရေးထားသည် */
-  /* Viber app ရှိရင် app ဖွင့်မည်၊ မရှိရင် Viber web/desktop ကို ရောက်မည် */
-  const viberApp  = 'viber://chat?number=%2B959699459935';
-  const viberWeb  = 'https://invite.viber.com/?number=959699459935';
-  const viberLink = document.getElementById('viberLink');
-  viberLink.href = viberApp;
-  /* app မရှိရင် web ကို ၁.၂ စက္ကန့်အတွင်း fallback */
-  viberLink.onclick = function (e) {
-    const start = Date.now();
-    setTimeout(() => {
-      if (Date.now() - start < 1500 && !document.hidden) {
-        window.location.href = viberWeb;
-      }
-    }, 1200);
-  };
-
-  /* Telegram — username ကို တိုက်ရိုက် chat ဖွင့် */
+  // Telegram — chat box မှာ စာအုပ်အချက်အလက် အော်တို ဖြည့်
+  const msg = buildOrderMessage(book);
   document.getElementById('telegramLink').href =
-    `https://t.me/moehtetkyaw9799?text=${msg}`;
+    `https://t.me/${TELEGRAM_USER}?text=${encodeURIComponent(msg)}`;
 
   document.getElementById('contactModal').classList.add('show');
 }
@@ -536,6 +522,105 @@ document.getElementById('contactModal').addEventListener('click', e => {
   if (e.target.id === 'contactModal') closeModal();
 });
 
+/* ===== Order message (Telegram auto-fill အတွက်) ===== */
+function buildOrderMessage(book) {
+  return `မင်္ဂလာပါ၊ ကျွန်တော်/ကျွန်မ ဒီစာအုပ် ဝယ်ချင်ပါတယ်:\n\n` +
+         `📕 စာအုပ်: ${book.title}\n` +
+         `✍️ စာရေးဆရာ: ${book.author}\n` +
+         `💰 ဈေးနှုန်း: ${formatPrice(book.price)} ကျပ်`;
+}
+
+/* ===== Viber Button — Fallback + Copy ===== */
+document.getElementById('viberBtn').addEventListener('click', async () => {
+  if (!currentBook) return;
+
+  const msg = buildOrderMessage(currentBook);
+  const viberAppURL = `viber://chat?number=%2B${VIBER_NUMBER_INTL}&text=${encodeURIComponent(msg)}`;
+
+  // ၁။ Message ကို clipboard ကို ကြိုတင် copy (fallback အတွက်)
+  try {
+    await navigator.clipboard.writeText(msg);
+  } catch (e) {
+    copyFallback(msg);
+  }
+
+  // ၂။ Viber app ဖွင့်ကြည့်
+  let appOpened = false;
+  const startTime = Date.now();
+
+  const onVisibilityChange = () => {
+    if (document.hidden) appOpened = true;
+  };
+  document.addEventListener('visibilitychange', onVisibilityChange);
+
+  // Viber app URL ကို ဖွင့်
+  try {
+    window.location.href = viberAppURL;
+  } catch (e) {
+    appOpened = false;
+  }
+
+  // ၃။ ၁.၅ စက္ကန့် အကြာမှာ app မဖွင့်ရင် fallback
+  setTimeout(async () => {
+    document.removeEventListener('visibilitychange', onVisibilityChange);
+
+    if (!appOpened && !document.hidden) {
+      // နံပါတ်ကို clipboard ကို copy
+      try {
+        await navigator.clipboard.writeText(VIBER_NUMBER);
+        showToast(
+          `📋 Viber မဖွင့်နိုင်ပါ။ ဖုန်းနံပါတ် "${VIBER_NUMBER}" ကို copy ပြီးပါပြီ။ Viber ကို ဖွင့်ပြီး paste လုပ်ကာ ဆက်သွယ်ပါ။`
+        );
+      } catch (e) {
+        // clipboard API မရရင် manual copy dialog
+        fallbackCopyDialog(VIBER_NUMBER);
+      }
+
+      // Viber web ကို ကြိုးစား (optional)
+      // window.open('https://invite.viber.com/?number=' + VIBER_NUMBER_INTL, '_blank');
+    } else {
+      showToast('✅ Viber ကို ဖွင့်နေပါပြီ...');
+    }
+  }, 1500);
+});
+
+/* ===== Copy fallback (execCommand) ===== */
+function copyFallback(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); } catch (e) {}
+  document.body.removeChild(ta);
+}
+
+/* ===== Manual copy dialog (clipboard API မရရင်) ===== */
+function fallbackCopyDialog(text) {
+  const userInput = prompt(
+    `Viber မဖွင့်နိုင်ပါ။ အောက်ပါနံပါတ်ကို ကိုယ်တိုင် copy လုပ်ပါ:\n\n${text}\n\n(OK နှိပ်ပြီး Ctrl+C ဖြင့် copy လုပ်နိုင်ပါတယ်)`,
+    text
+  );
+  if (userInput) {
+    copyFallback(text);
+    showToast(`📋 "${text}" ကို copy ပြီးပါပြီ`);
+  }
+}
+
+/* ===== Toast ===== */
+let toastTimer;
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 4000);
+}
+
+/* ===== Events ===== */
 document.getElementById('searchInput').addEventListener('input', renderBooks);
 
 loadBooks();
