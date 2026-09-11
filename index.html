@@ -9,28 +9,29 @@
 
   body {
     font-family: 'Pyidaungsu', 'Myanmar Text', sans-serif;
-    background: #f4f1ea;
+    background: #fdf4f8;
     color: #2c2c2c;
     padding-bottom: 40px;
   }
 
-  /* ===== Header ===== */
+  /* ===== Header — ဖန်ခရမ်း / ပန်းရောင် ===== */
   header {
-    background: linear-gradient(135deg, #6b3e1e, #b8860b);
+    background: linear-gradient(135deg, #c2185b 0%, #e91e63 45%, #f06292 100%);
     color: #fff;
-    padding: 32px 20px 26px;
+    padding: 34px 20px 28px;
     text-align: center;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+    box-shadow: 0 4px 16px rgba(194, 24, 91, 0.35);
+    position: relative;
   }
   header h1 {
-    font-size: 1.65rem;
+    font-size: 1.7rem;
     margin-bottom: 8px;
     line-height: 1.6;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.25);
+    text-shadow: 0 2px 6px rgba(0,0,0,0.28);
   }
   header p {
     font-size: 0.95rem;
-    opacity: 0.92;
+    opacity: 0.95;
   }
 
   /* ===== Search ===== */
@@ -50,21 +51,22 @@
     border-radius: 30px;
     font-size: 1rem;
     outline: none;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.18);
+    box-shadow: 0 3px 10px rgba(194,24,91,0.18);
     font-family: inherit;
   }
   .search-wrap button {
     padding: 13px 24px;
     border: none;
-    background: #2c2c2c;
+    background: #c2185b;
     color: #fff;
     border-radius: 30px;
     cursor: pointer;
     font-family: inherit;
     font-size: 0.95rem;
     transition: 0.2s;
+    box-shadow: 0 3px 10px rgba(194,24,91,0.28);
   }
-  .search-wrap button:hover { background: #000; }
+  .search-wrap button:hover { background: #8e0e42; }
 
   /* ===== Container ===== */
   .container {
@@ -73,7 +75,7 @@
     padding: 0 15px;
   }
 
-  /* ===== Grid — 5 ကွက် × 4 တန်း = 20 ===== */
+  /* ===== Grid — ၅ အုပ်တန်း × ၄ တန်း = 20 ===== */
   .book-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -95,17 +97,17 @@
     background: #fff;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    box-shadow: 0 3px 10px rgba(194,24,91,0.08);
     transition: transform 0.2s, box-shadow 0.2s;
     display: flex;
     flex-direction: column;
   }
   .book-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+    box-shadow: 0 10px 26px rgba(194,24,91,0.22);
   }
 
-  /* ===== CSS Book Cover (ပုံမလိုဘဲ ဖန်တီး) ===== */
+  /* ===== CSS Book Cover ===== */
   .book-cover {
     position: relative;
     width: 100%;
@@ -113,7 +115,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 14px 12px;
+    padding: 16px 12px;
     color: #fff;
     overflow: hidden;
     background: linear-gradient(135deg, var(--c1, #6b3e1e), var(--c2, #b8860b));
@@ -138,41 +140,116 @@
     width: 200%; height: 200%;
     background: linear-gradient(120deg,
       rgba(255,255,255,0) 40%,
-      rgba(255,255,255,0.18) 50%,
+      rgba(255,255,255,0.16) 50%,
       rgba(255,255,255,0) 60%);
     pointer-events: none;
     z-index: 1;
   }
 
-  /* အလှဆင် ဘောင်လိုင်း */
-  .cover-frame {
+  /* ===== မြန်မာ့ရိုးရာ ကနုတ်ဘောင် (Kanote Frame) ===== */
+  .kanote-frame {
     position: absolute;
-    inset: 22px 12px 22px 22px;
-    border: 1.5px solid rgba(255,255,255,0.45);
-    border-radius: 3px;
+    inset: 10px 10px 10px 18px;
+    border: 1.5px solid rgba(255, 235, 200, 0.85);
+    border-radius: 4px;
     pointer-events: none;
     z-index: 2;
   }
 
+  /* အတွင်းဘောင် (double line) */
+  .kanote-frame::before {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border: 1px solid rgba(255, 235, 200, 0.55);
+    border-radius: 2px;
+  }
+
+  /* ကနုတ်ပန်း ထောင့်လေးခု (corners) */
+  .kanote-frame::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    background:
+      /* ထောင့်အပေါ်ဘယ် */
+      radial-gradient(circle at 0% 0%, rgba(255,235,200,0.95) 3px, transparent 4px),
+      /* ထောင့်အပေါ်ညာ */
+      radial-gradient(circle at 100% 0%, rgba(255,235,200,0.95) 3px, transparent 4px),
+      /* ထောင့်အောက်ဘယ် */
+      radial-gradient(circle at 0% 100%, rgba(255,235,200,0.95) 3px, transparent 4px),
+      /* ထောင့်အောက်ညာ */
+      radial-gradient(circle at 100% 100%, rgba(255,235,200,0.95) 3px, transparent 4px);
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+  }
+
+  /* ကနုတ်ပန်း ထောင့်အပန်းအလှ (curved flourish) */
+  .kanote-corner {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border: 1.5px solid rgba(255, 235, 200, 0.9);
+    z-index: 3;
+    pointer-events: none;
+  }
+  .kanote-corner.tl {
+    top: 6px; left: 14px;
+    border-right: none;
+    border-bottom: none;
+    border-top-left-radius: 12px;
+  }
+  .kanote-corner.tr {
+    top: 6px; right: 6px;
+    border-left: none;
+    border-bottom: none;
+    border-top-right-radius: 12px;
+  }
+  .kanote-corner.bl {
+    bottom: 6px; left: 14px;
+    border-right: none;
+    border-top: none;
+    border-bottom-left-radius: 12px;
+  }
+  .kanote-corner.br {
+    bottom: 6px; right: 6px;
+    border-left: none;
+    border-top: none;
+    border-bottom-right-radius: 12px;
+  }
+
+  /* ထောင့်အလယ် အစက်လေး (dot accents) */
+  .kanote-dot {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 235, 200, 0.95);
+    border-radius: 50%;
+    z-index: 3;
+  }
+  .kanote-dot.tl { top: 4px; left: 12px; }
+  .kanote-dot.tr { top: 4px; right: 4px; }
+  .kanote-dot.bl { bottom: 4px; left: 12px; }
+  .kanote-dot.br { bottom: 4px; right: 4px; }
+
   .cover-top {
     position: relative;
-    z-index: 3;
+    z-index: 4;
     text-align: center;
     font-size: 0.62rem;
     letter-spacing: 1.5px;
-    opacity: 0.9;
-    margin-top: 4px;
+    opacity: 0.95;
+    margin-top: 6px;
   }
 
   .cover-title {
     position: relative;
-    z-index: 3;
+    z-index: 4;
     text-align: center;
     font-size: 1rem;
     font-weight: 700;
     line-height: 1.45;
-    padding: 0 6px;
-    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    padding: 0 8px;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.55);
     flex: 1;
     display: flex;
     align-items: center;
@@ -182,11 +259,11 @@
 
   .cover-author {
     position: relative;
-    z-index: 3;
+    z-index: 4;
     text-align: center;
     font-size: 0.68rem;
-    opacity: 0.92;
-    margin-bottom: 4px;
+    opacity: 0.95;
+    margin-bottom: 6px;
     font-style: italic;
   }
 
@@ -215,14 +292,14 @@
   }
   .book-price {
     font-size: 0.95rem;
-    color: #b8860b;
+    color: #c2185b;
     font-weight: 700;
     margin-bottom: 10px;
   }
   .buy-btn {
     margin-top: auto;
     text-align: center;
-    background: linear-gradient(135deg, #25d366, #128c7e);
+    background: linear-gradient(135deg, #c2185b, #f06292);
     color: #fff;
     padding: 9px;
     border-radius: 6px;
@@ -273,7 +350,7 @@
   .modal-box h3 {
     font-size: 1.05rem;
     margin-bottom: 6px;
-    color: #2c2c2c;
+    color: #c2185b;
     line-height: 1.5;
   }
   .modal-box p {
@@ -388,8 +465,16 @@ function renderBooks() {
     card.className = 'book-card';
     card.innerHTML = `
       <div class="book-cover" style="--c1:${c1}; --c2:${c2};">
-        <div class="cover-frame"></div>
-        <div class="cover-top">လောကီပညာ</div>
+        <div class="kanote-frame"></div>
+        <span class="kanote-corner tl"></span>
+        <span class="kanote-corner tr"></span>
+        <span class="kanote-corner bl"></span>
+        <span class="kanote-corner br"></span>
+        <span class="kanote-dot tl"></span>
+        <span class="kanote-dot tr"></span>
+        <span class="kanote-dot bl"></span>
+        <span class="kanote-dot br"></span>
+        <div class="cover-top">❖ လောကီပညာ ❖</div>
         <div class="cover-title">${book.title}</div>
         <div class="cover-author">— ${book.author} —</div>
       </div>
@@ -414,13 +499,31 @@ function escapeQuote(str) {
   return String(str).replace(/'/g, "\\'").replace(/"/g, '&quot;');
 }
 
+/* ===== Modal ဖွင့် + Viber/Telegram လင့် ===== */
 function openModal(title) {
   document.getElementById('modalBookTitle').textContent = `📖 "${title}" ဝယ်ယူရန်`;
 
   const msg = encodeURIComponent(`မင်္ဂလာပါ၊ "${title}" စာအုပ် ဝယ်ချင်ပါတယ်။`);
 
-  document.getElementById('viberLink').href    = 'viber://chat?number=%2B959699459935';
-  document.getElementById('telegramLink').href = `https://t.me/moehtetkyaw9799?text=${msg}`;
+  /* Viber — ဖုန်းနံပါတ်ကို နိုင်ငံတကာ format (+959...) နဲ့ ရေးထားသည် */
+  /* Viber app ရှိရင် app ဖွင့်မည်၊ မရှိရင် Viber web/desktop ကို ရောက်မည် */
+  const viberApp  = 'viber://chat?number=%2B959699459935';
+  const viberWeb  = 'https://invite.viber.com/?number=959699459935';
+  const viberLink = document.getElementById('viberLink');
+  viberLink.href = viberApp;
+  /* app မရှိရင် web ကို ၁.၂ စက္ကန့်အတွင်း fallback */
+  viberLink.onclick = function (e) {
+    const start = Date.now();
+    setTimeout(() => {
+      if (Date.now() - start < 1500 && !document.hidden) {
+        window.location.href = viberWeb;
+      }
+    }, 1200);
+  };
+
+  /* Telegram — username ကို တိုက်ရိုက် chat ဖွင့် */
+  document.getElementById('telegramLink').href =
+    `https://t.me/moehtetkyaw9799?text=${msg}`;
 
   document.getElementById('contactModal').classList.add('show');
 }
@@ -439,4 +542,4 @@ loadBooks();
 </script>
 
 </body>
-  </html>
+</html>
