@@ -342,15 +342,33 @@ document.getElementById('copyAgainBtn').addEventListener('click', async () => {
   }
 });
 
-document.getElementById('viberBtn').addEventListener('click', async () => {
+/*
+  FIX: mobile browsers (iOS Safari / Chrome especially) only allow a
+  custom-scheme redirect like "viber://..." when it happens SYNCHRONOUSLY
+  inside the click handler, still tied to the user's tap. The previous
+  code did `await copyToClipboard(message)` FIRST, which breaks that
+  "user gesture" chain — by the time window.location.href ran, the browser
+  no longer trusted it as a direct result of the tap, so it silently
+  blocked the Viber app-open. Clipboard copy was fine, but auto-redirect
+  never fired.
+
+  Fix: kick off the viber:// redirect immediately, synchronously, then
+  do the clipboard copy right after (not awaited before the redirect).
+*/
+document.getElementById('viberBtn').addEventListener('click', () => {
   if (!currentBook) return;
   const message = buildOrderMessage(currentBook);
-  await copyToClipboard(message);
   const viberURL = `viber://chat?number=%2B${VIBER_NUMBER_INTL}`;
+
+  // Must run synchronously, still inside the click, before any await.
+  window.location.href = viberURL;
+
+  // Copy can happen right after — doesn't need to block the redirect.
+  copyToClipboard(message);
+
   let appOpened = false;
   const onVis = () => { if (document.hidden) appOpened = true; };
   document.addEventListener('visibilitychange', onVis);
-  try { window.location.href = viberURL; } catch (e) {}
   setTimeout(async () => {
     document.removeEventListener('visibilitychange', onVis);
     if (appOpened || document.hidden) {
