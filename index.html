@@ -71,7 +71,7 @@
     padding: 0 15px;
   }
 
-  /* ===== Grid — ၄ တန်း × ၅ အုပ် = 20 ===== */
+  /* ===== Grid — ၄ တန်း × ၅ အုပ် ===== */
   .book-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -278,12 +278,12 @@
   .modal-box {
     background: #fff;
     border-radius: 14px;
-    max-width: 430px;
+    max-width: 460px;
     width: 100%;
-    padding: 26px 22px;
+    padding: 24px 22px;
     text-align: center;
     animation: pop 0.25s ease;
-    max-height: 90vh;
+    max-height: 92vh;
     overflow-y: auto;
   }
   @keyframes pop {
@@ -292,27 +292,64 @@
   }
   .modal-box h3 {
     font-size: 1.05rem;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     color: #c2185b;
     line-height: 1.5;
   }
-  .book-summary {
-    background: #fdf4f8;
-    border-left: 3px solid #e91e63;
-    border-radius: 6px;
-    padding: 12px 14px;
-    margin-bottom: 16px;
+
+  /* ===== Auto-copy notice ===== */
+  .copy-notice {
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    border: 1px solid #4caf50;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+    font-size: 0.85rem;
+    color: #2e7d32;
     text-align: left;
-    font-size: 0.88rem;
-    line-height: 1.7;
+    line-height: 1.5;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
-  .book-summary .lbl { color: #999; display: inline-block; min-width: 90px; }
-  .book-summary .val { color: #2c2c2c; font-weight: 600; }
+  .copy-notice .icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  /* ===== Order message preview ===== */
+  .book-summary {
+    background: #fff8fb;
+    border: 1.5px dashed #f48fb1;
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+    text-align: left;
+    font-size: 0.85rem;
+    line-height: 1.75;
+    color: #333;
+    white-space: pre-line;
+    font-family: inherit;
+    max-height: 220px;
+    overflow-y: auto;
+    position: relative;
+  }
+  .book-summary-label {
+    position: absolute;
+    top: -10px;
+    left: 12px;
+    background: #fff;
+    padding: 0 6px;
+    color: #c2185b;
+    font-size: 0.72rem;
+    font-weight: 600;
+    border-radius: 3px;
+  }
 
   .modal-box p {
     font-size: 0.85rem;
     color: #666;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
   }
   .contact-btn {
     display: block;
@@ -333,6 +370,24 @@
   .contact-btn:hover { opacity: 0.9; }
   .viber { background: #7360f2; }
   .telegram { background: #229ed9; }
+
+  /* Copy message button (small) */
+  .copy-again-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    background: #f5f5f5;
+    color: #555;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.85rem;
+    transition: 0.2s;
+  }
+  .copy-again-btn:hover { background: #ececec; }
+
   .close-btn {
     margin-top: 6px;
     background: none;
@@ -344,7 +399,7 @@
     padding: 8px;
   }
 
-  /* ===== Toast Notification ===== */
+  /* ===== Toast ===== */
   .toast {
     position: fixed;
     bottom: 30px;
@@ -394,9 +449,19 @@
   <div class="modal-box">
     <h3>📖 စာအုပ်ဝယ်ယူရန်</h3>
 
-    <div class="book-summary" id="bookSummary"></div>
+    <!-- Auto-copy notice -->
+    <div class="copy-notice">
+      <span class="icon">✅</span>
+      <span>စာအုပ်အချက်အလက်ကို <b>clipboard ကို ကူးပြီးပါပြီ</b>။
+      Viber/Telegram ဖွင့်ပြီး chat box မှာ <b>paste</b> လုပ်လိုက်ပါ။</span>
+    </div>
 
-    <p>အောက်ပါ နည်းလမ်းများဖြင့် ဆက်သွယ်ဝယ်ယူနိုင်ပါတယ်</p>
+    <!-- Order message preview -->
+    <div class="book-summary" id="bookSummary">
+      <span class="book-summary-label">📋 ကူးထားသော စာ</span>
+    </div>
+
+    <p>ဆက်သွယ်ဝယ်ယူရန်</p>
 
     <button class="contact-btn viber" id="viberBtn">
       ☎️ Viber: 09699459935
@@ -404,6 +469,10 @@
     <a class="contact-btn telegram" id="telegramLink" href="#" target="_blank">
       🆔 Telegram: @moehtetkyaw9799
     </a>
+
+    <button class="copy-again-btn" id="copyAgainBtn">
+      📋 စာကို ထပ်မံ ကူးမည်
+    </button>
 
     <button class="close-btn" onclick="closeModal()">ပိတ်မည်</button>
   </div>
@@ -414,7 +483,7 @@
 
 <script>
 const VIBER_NUMBER = '09699459935';
-const VIBER_NUMBER_INTL = '959699459935';   // + မပါဘဲ
+const VIBER_NUMBER_INTL = '959699459935';
 const TELEGRAM_USER = 'moehtetkyaw9799';
 
 let allBooks = [];
@@ -454,7 +523,7 @@ function renderBooks() {
   }
   noResult.style.display = 'none';
 
-  filtered.forEach((book, idx) => {
+  filtered.forEach((book) => {
     const c1 = book.color1 || '#6b3e1e';
     const c2 = book.color2 || '#b8860b';
 
@@ -479,14 +548,10 @@ function renderBooks() {
         <div class="book-title">${book.title}</div>
         <div class="book-author">✍️ ${book.author}</div>
         <div class="book-price">💰 ${formatPrice(book.price)} ကျပ်</div>
-        <button class="buy-btn" data-idx="${idx}">
-          🛒 ဝယ်မည်
-        </button>
+        <button class="buy-btn">🛒 ဝယ်မည်</button>
       </div>
     `;
-    // index ကို ပြန်ရှာဖို့ data attribute သုံး (အမည်ထဲမှာ quote ရှိလည်း ပြဿနာမရှိ)
-    const btn = card.querySelector('.buy-btn');
-    btn.addEventListener('click', () => openModal(book));
+    card.querySelector('.buy-btn').addEventListener('click', () => openModal(book));
     grid.appendChild(card);
   });
 }
@@ -495,21 +560,53 @@ function formatPrice(p) {
   return Number(p || 0).toLocaleString('en-US');
 }
 
+/* ===== Order message (chat box မှာ paste လုပ်မည့် စာ) ===== */
+function buildOrderMessage(book) {
+  return (
+    `မင်္ဂလာပါ 🙏\n` +
+    `ဒီစာအုပ် ဝယ်ချင်ပါတယ်:\n\n` +
+    `📕 စာအုပ်အမည်: ${book.title}\n` +
+    `✍️ စာရေးဆရာ: ${book.author}\n` +
+    `💰 ဈေးနှုန်း: ${formatPrice(book.price)} ကျပ်\n\n` +
+    `ကျေးဇူးပြု၍ ဆက်သွယ်ပေးပါ။`
+  );
+}
+
 /* ===== Modal ===== */
-function openModal(book) {
+async function openModal(book) {
   currentBook = book;
 
-  // စာအုပ်အချက်အလက် summary
-  document.getElementById('bookSummary').innerHTML = `
-    <div><span class="lbl">📕 စာအုပ်</span>: <span class="val">${book.title}</span></div>
-    <div><span class="lbl">✍️ စာရေးဆရာ</span>: <span class="val">${book.author}</span></div>
-    <div><span class="lbl">💰 ဈေးနှုန်း</span>: <span class="val">${formatPrice(book.price)} ကျပ်</span></div>
-  `;
+  const message = buildOrderMessage(book);
 
-  // Telegram — chat box မှာ စာအုပ်အချက်အလက် အော်တို ဖြည့်
-  const msg = buildOrderMessage(book);
+  // ၁။ Clipboard ကို အော်တို copy (ဝယ်မည် နှိပ်တာနဲ့)
+  const copied = await copyToClipboard(message);
+
+  // ၂။ Summary box မှာ message ပြ
+  const summaryBox = document.getElementById('bookSummary');
+  summaryBox.innerHTML =
+    `<span class="book-summary-label">📋 ကူးထားသော စာ</span>${escapeHtml(message)}`;
+
+  // ၃။ Auto-copy notice
+  const notice = document.querySelector('.copy-notice');
+  if (copied) {
+    notice.style.background = 'linear-gradient(135deg, #e8f5e9, #c8e6c9)';
+    notice.style.borderColor = '#4caf50';
+    notice.style.color = '#2e7d32';
+    notice.innerHTML = `<span class="icon">✅</span>
+      <span>စာအုပ်အချက်အလက်ကို <b>clipboard ကို ကူးပြီးပါပြီ</b>။
+      Viber/Telegram ဖွင့်ပြီး chat box မှာ <b>paste</b> လုပ်လိုက်ပါ။</span>`;
+  } else {
+    notice.style.background = 'linear-gradient(135deg, #fff3e0, #ffe0b2)';
+    notice.style.borderColor = '#ff9800';
+    notice.style.color = '#e65100';
+    notice.innerHTML = `<span class="icon">⚠️</span>
+      <span>Clipboard ကို အော်တို ကူးမရပါ။
+      အောက်က <b>📋 စာကို ထပ်မံ ကူးမည်</b> ကို နှိပ်ပါ။</span>`;
+  }
+
+  // ၄။ Telegram — URL text (support ရင် auto-fill ဖြစ်မယ်)
   document.getElementById('telegramLink').href =
-    `https://t.me/${TELEGRAM_USER}?text=${encodeURIComponent(msg)}`;
+    `https://t.me/${TELEGRAM_USER}?text=${encodeURIComponent(message)}`;
 
   document.getElementById('contactModal').classList.add('show');
 }
@@ -522,102 +619,118 @@ document.getElementById('contactModal').addEventListener('click', e => {
   if (e.target.id === 'contactModal') closeModal();
 });
 
-/* ===== Order message (Telegram auto-fill အတွက်) ===== */
-function buildOrderMessage(book) {
-  return `မင်္ဂလာပါ၊ ကျွန်တော်/ကျွန်မ ဒီစာအုပ် ဝယ်ချင်ပါတယ်:\n\n` +
-         `📕 စာအုပ်: ${book.title}\n` +
-         `✍️ စာရေးဆရာ: ${book.author}\n` +
-         `💰 ဈေးနှုန်း: ${formatPrice(book.price)} ကျပ်`;
+/* ===== Clipboard copy (promise) ===== */
+async function copyToClipboard(text) {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } else {
+      // fallback
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    }
+  } catch (e) {
+    console.warn('Copy မရပါ:', e);
+    return false;
+  }
 }
 
-/* ===== Viber Button — Fallback + Copy ===== */
+/* ===== Copy again button ===== */
+document.getElementById('copyAgainBtn').addEventListener('click', async () => {
+  if (!currentBook) return;
+  const message = buildOrderMessage(currentBook);
+  const ok = await copyToClipboard(message);
+  if (ok) {
+    showToast('✅ စာအုပ်အချက်အလက်ကို ထပ်မံ ကူးပြီးပါပြီ။ Chat box မှာ paste လုပ်ပါ။');
+  } else {
+    fallbackCopyDialog(message);
+  }
+});
+
+/* ===== Viber button ===== */
 document.getElementById('viberBtn').addEventListener('click', async () => {
   if (!currentBook) return;
 
-  const msg = buildOrderMessage(currentBook);
-  const viberAppURL = `viber://chat?number=%2B${VIBER_NUMBER_INTL}&text=${encodeURIComponent(msg)}`;
+  const message = buildOrderMessage(currentBook);
 
-  // ၁။ Message ကို clipboard ကို ကြိုတင် copy (fallback အတွက်)
-  try {
-    await navigator.clipboard.writeText(msg);
-  } catch (e) {
-    copyFallback(msg);
-  }
+  // message ကို clipboard မှာ ရှိအောင် သေချာ
+  await copyToClipboard(message);
 
-  // ၂။ Viber app ဖွင့်ကြည့်
+  // Viber app URL — text parameter ကို support လုပ်ရင် auto-fill ဖြစ်မယ်
+  // မလုပ်ရင်လည်း clipboard မှာ ရှိပြီးသား
+  const viberURL = `viber://chat?number=%2B${VIBER_NUMBER_INTL}`;
+
   let appOpened = false;
-  const startTime = Date.now();
+  const onVis = () => { if (document.hidden) appOpened = true; };
+  document.addEventListener('visibilitychange', onVis);
 
-  const onVisibilityChange = () => {
-    if (document.hidden) appOpened = true;
-  };
-  document.addEventListener('visibilitychange', onVisibilityChange);
-
-  // Viber app URL ကို ဖွင့်
   try {
-    window.location.href = viberAppURL;
-  } catch (e) {
-    appOpened = false;
-  }
+    window.location.href = viberURL;
+  } catch (e) { /* ignore */ }
 
-  // ၃။ ၁.၅ စက္ကန့် အကြာမှာ app မဖွင့်ရင် fallback
   setTimeout(async () => {
-    document.removeEventListener('visibilitychange', onVisibilityChange);
+    document.removeEventListener('visibilitychange', onVis);
 
-    if (!appOpened && !document.hidden) {
-      // နံပါတ်ကို clipboard ကို copy
-      try {
-        await navigator.clipboard.writeText(VIBER_NUMBER);
-        showToast(
-          `📋 Viber မဖွင့်နိုင်ပါ။ ဖုန်းနံပါတ် "${VIBER_NUMBER}" ကို copy ပြီးပါပြီ။ Viber ကို ဖွင့်ပြီး paste လုပ်ကာ ဆက်သွယ်ပါ။`
-        );
-      } catch (e) {
-        // clipboard API မရရင် manual copy dialog
-        fallbackCopyDialog(VIBER_NUMBER);
-      }
-
-      // Viber web ကို ကြိုးစား (optional)
-      // window.open('https://invite.viber.com/?number=' + VIBER_NUMBER_INTL, '_blank');
+    if (appOpened || document.hidden) {
+      showToast('✅ Viber ဖွင့်နေပါပြီ။ Chat box မှာ paste (Ctrl+V) လုပ်ပါ။');
     } else {
-      showToast('✅ Viber ကို ဖွင့်နေပါပြီ...');
+      // Viber မဖွင့်နိုင်ရင် နံပါတ် + message copy
+      await copyToClipboard(VIBER_NUMBER);
+      showToast(
+        `📋 Viber မဖွင့်နိုင်ပါ။ ဖုန်းနံပါတ် "${VIBER_NUMBER}" ကို copy ပြီးပါပြီ။ ` +
+        `Viber ကို ဖွင့်ပြီး ဤနံပါတ်ကို ရှာပါ။ ` +
+        `(စာအုပ်အချက်အလက်ကိုလည်း modal က "📋 ထပ်မံကူးမည်" နဲ့ ပြန်ကူးနိုင်ပါတယ်)`,
+        6000
+      );
     }
   }, 1500);
 });
 
-/* ===== Copy fallback (execCommand) ===== */
-function copyFallback(text) {
-  const ta = document.createElement('textarea');
-  ta.value = text;
-  ta.style.position = 'fixed';
-  ta.style.left = '-9999px';
-  document.body.appendChild(ta);
-  ta.select();
-  try { document.execCommand('copy'); } catch (e) {}
-  document.body.removeChild(ta);
-}
-
-/* ===== Manual copy dialog (clipboard API မရရင်) ===== */
+/* ===== Manual copy dialog ===== */
 function fallbackCopyDialog(text) {
   const userInput = prompt(
-    `Viber မဖွင့်နိုင်ပါ။ အောက်ပါနံပါတ်ကို ကိုယ်တိုင် copy လုပ်ပါ:\n\n${text}\n\n(OK နှိပ်ပြီး Ctrl+C ဖြင့် copy လုပ်နိုင်ပါတယ်)`,
+    `အောက်ပါစာကို ကိုယ်တိုင် copy လုပ်ပါ (Ctrl+C):\n\n${text}`,
     text
   );
   if (userInput) {
-    copyFallback(text);
-    showToast(`📋 "${text}" ကို copy ပြီးပါပြီ`);
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+    showToast('📋 စာကို copy ပြီးပါပြီ');
   }
 }
 
 /* ===== Toast ===== */
 let toastTimer;
-function showToast(message) {
+function showToast(message, duration = 4000) {
   const toast = document.getElementById('toast');
   toast.textContent = message;
   toast.classList.add('show');
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => {
     toast.classList.remove('show');
-  }, 4000);
+  }, duration);
+}
+
+/* ===== Utils ===== */
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
 }
 
 /* ===== Events ===== */
