@@ -10,13 +10,59 @@
     font-family: 'Pyidaungsu', 'Myanmar Text', sans-serif;
     background: #fdf4f8; color: #2c2c2c; padding-bottom: 40px;
   }
+
+  /* ===== ပြင်ဆင်ပြီး: Header ဖန်ကြည်အစိမ်းရောင် ===== */
   header {
-    background: linear-gradient(135deg, #c2185b 0%, #e91e63 45%, #f06292 100%);
+    background: linear-gradient(135deg,
+      rgba(76, 175, 80, 0.55) 0%,
+      rgba(129, 199, 132, 0.35) 45%,
+      rgba(200, 230, 201, 0.45) 100%);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border-bottom: 1.5px solid rgba(255, 255, 255, 0.5);
     color: #fff; padding: 34px 20px 28px; text-align: center;
-    box-shadow: 0 4px 16px rgba(194, 24, 91, 0.35);
+    box-shadow:
+      0 4px 20px rgba(46, 125, 50, 0.28),
+      inset 0 1px 1px rgba(255, 255, 255, 0.55),
+      inset 0 -1px 1px rgba(255, 255, 255, 0.15);
+    position: relative;
+    overflow: hidden;
   }
-  header h1 { font-size: 1.7rem; margin-bottom: 8px; line-height: 1.6; text-shadow: 0 2px 6px rgba(0,0,0,0.28); }
-  header p { font-size: 0.95rem; opacity: 0.95; }
+  header::before {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(120deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.22) 50%,
+      transparent 70%);
+    pointer-events: none;
+  }
+  header h1 {
+    font-size: 1.7rem; margin-bottom: 8px; line-height: 1.6;
+    text-shadow: 0 2px 8px rgba(27, 94, 32, 0.55);
+    position: relative; z-index: 2;
+  }
+  header p {
+    font-size: 0.95rem; opacity: 0.98;
+    text-shadow: 0 1px 5px rgba(27, 94, 32, 0.45);
+    position: relative; z-index: 2;
+  }
+
+  /* ===== အသုံးပြုနည်း ခလုတ် (ညာဘက်အပေါ်ထောင့်) ===== */
+  .guide-btn {
+    position: absolute; top: 14px; right: 14px;
+    background: rgba(255,255,255,0.28);
+    border: 1.5px solid rgba(255,255,255,0.85);
+    color: #fff; padding: 8px 14px; border-radius: 30px;
+    font-family: inherit; font-size: 0.82rem; font-weight: 600;
+    cursor: pointer; transition: 0.2s; backdrop-filter: blur(6px);
+    display: flex; align-items: center; gap: 5px; z-index: 10;
+    text-shadow: 0 1px 4px rgba(27, 94, 32, 0.5);
+  }
+  .guide-btn:hover { background: rgba(255,255,255,0.45); transform: translateY(-1px); }
+  @media (max-width: 480px) {
+    .guide-btn { top: 10px; right: 10px; padding: 7px 11px; font-size: 0.75rem; }
+  }
+
   .search-wrap { max-width: 700px; margin: 22px auto 0; display: flex; gap: 10px; padding: 0 15px; flex-wrap: wrap; }
   .search-wrap input {
     flex: 1; min-width: 200px; padding: 13px 18px; border: none; border-radius: 30px;
@@ -39,6 +85,17 @@
     display: flex; flex-direction: column;
   }
   .book-card:hover { transform: translateY(-5px); box-shadow: 0 10px 26px rgba(194,24,91,0.22); }
+
+  /* ===== အပေါ်ဆုံးကဒ် အပြာရောင် ===== */
+  .book-card.top-card {
+    box-shadow: 0 4px 16px rgba(21, 101, 192, 0.35);
+    border: 2px solid #1565c0;
+  }
+  .book-card.top-card .book-price { color: #1565c0; }
+  .book-card.top-card .buy-btn {
+    background: linear-gradient(135deg, #1565c0, #42a5f0);
+  }
+
   .book-cover {
     position: relative; width: 100%; aspect-ratio: 3 / 4;
     display: flex; flex-direction: column; justify-content: space-between;
@@ -157,6 +214,92 @@
     z-index: 200; max-width: 90%; text-align: center; line-height: 1.5;
   }
   .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+  /* ===== အသုံးပြုနည်း Modal (ပရီမီယမ် ဖန်ကြည်ရောင် + ပန်းရောင်စာသား) ===== */
+  #guideModal {
+    display: none; position: fixed; inset: 0;
+    background: rgba(20, 10, 30, 0.72);
+    backdrop-filter: blur(6px);
+    z-index: 150; justify-content: center; align-items: center; padding: 20px;
+  }
+  #guideModal.show { display: flex; }
+  .guide-box {
+    position: relative; max-width: 460px; width: 100%;
+    border-radius: 20px; padding: 28px 24px 22px;
+    background: linear-gradient(145deg,
+      rgba(255, 255, 255, 0.28) 0%,
+      rgba(255, 255, 255, 0.12) 50%,
+      rgba(255, 255, 255, 0.22) 100%);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border: 1.5px solid rgba(255, 255, 255, 0.45);
+    box-shadow:
+      0 20px 50px rgba(0, 0, 0, 0.35),
+      inset 0 1px 1px rgba(255, 255, 255, 0.6),
+      inset 0 -1px 1px rgba(255, 255, 255, 0.15);
+    color: #ff80ab;
+    animation: pop 0.3s ease;
+    max-height: 92vh; overflow-y: auto;
+  }
+  .guide-box::before {
+    content: ""; position: absolute; inset: 0; border-radius: 20px;
+    background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.22) 50%, transparent 70%);
+    pointer-events: none;
+  }
+  .guide-box h3 {
+    font-size: 1.15rem; margin-bottom: 16px; text-align: center;
+    color: #ff80ab; text-shadow: 0 2px 10px rgba(255, 128, 171, 0.6);
+    letter-spacing: 0.5px;
+  }
+  .guide-step {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 12px 14px; margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.14);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    color: #ffb3c9; font-size: 0.88rem; line-height: 1.7;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.35);
+  }
+  .guide-step .num {
+    flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+    background: linear-gradient(135deg, #f06292, #ff80ab);
+    color: #fff; display: flex; align-items: center; justify-content: center;
+    font-size: 0.78rem; font-weight: 700;
+    box-shadow: 0 3px 10px rgba(240, 98, 146, 0.55);
+  }
+  .guide-step b { color: #ff80ab; }
+  .guide-note {
+    margin-top: 14px; padding: 10px 12px;
+    background: rgba(255, 128, 171, 0.14);
+    border-left: 3px solid #ff80ab;
+    border-radius: 8px;
+    color: #ff80ab; font-size: 0.82rem; line-height: 1.7;
+    text-align: left;
+  }
+  .guide-close-btn {
+    display: block; width: 100%; margin-top: 18px; padding: 13px;
+    border: none; border-radius: 30px;
+    background: linear-gradient(135deg, #f06292, #ff80ab);
+    color: #fff; font-family: inherit; font-size: 0.95rem; font-weight: 700;
+    cursor: pointer; transition: 0.2s;
+    box-shadow: 0 8px 22px rgba(240, 98, 146, 0.55);
+  }
+  .guide-close-btn:hover { transform: translateY(-2px); opacity: 0.95; }
+
+  /* ===== ဝယ်မည် modal ထဲက အကြံပြုစာ ===== */
+  .recommend-note {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    border: 1px solid #2196f3; border-radius: 8px;
+    padding: 9px 12px; margin-bottom: 12px;
+    font-size: 0.82rem; color: #0d47a1; line-height: 1.6;
+    display: flex; align-items: center; gap: 7px; text-align: left;
+  }
+  .recommend-note .icon { font-size: 1.1rem; flex-shrink: 0; }
+  .viber-tip {
+    font-size: 0.78rem; color: #7360f2; margin: -4px 0 10px;
+    line-height: 1.6; text-align: left;
+    background: #f3f0ff; border-radius: 6px; padding: 7px 10px;
+  }
 </style>
 </head>
 <body>
@@ -164,6 +307,8 @@
 <header>
   <h1>🙏 မင်္ဂလာပါ</h1>
   <p>လောကီပညာ စာအုပ်စင်မှ ကြိုဆိုပါတယ်</p>
+  <!-- အသုံးပြုနည်း ခလုတ် -->
+  <button class="guide-btn" id="guideBtn">📖 အသုံးပြုနည်း</button>
 </header>
 
 <div class="search-wrap">
@@ -187,10 +332,53 @@
       <span class="book-summary-label">📋 ကူးထားသော စာ</span>
     </div>
     <p>ဆက်သွယ်ဝယ်ယူရန်</p>
+
+    <!-- Telegram အကြံပြုစာ -->
+    <div class="recommend-note">
+      <span class="icon">💡</span>
+      <span><b>Telegram ကို ပိုမို၍ အကြံပြုပါသည်</b> — ပိုမိုလွယ်ကူမြန်ဆန်ပါသည်။</span>
+    </div>
+
+    <a class="contact-btn telegram" id="telegramLink" href="#" target="_blank">🆔 Telegram: @moehtetkyaw9799 (အကြံပြု ⭐)</a>
     <button class="contact-btn viber" id="viberBtn">☎️ Viber: 09699459935</button>
-    <a class="contact-btn telegram" id="telegramLink" href="#" target="_blank">🆔 Telegram: @moehtetkyaw9799</a>
+
+    <!-- Viber အသုံးပြုနည်း အကြံပြုစာ -->
+    <div class="viber-tip">
+      ℹ️ Viber ကို နှိပ်သည့်အခါ <b>တစ်ကြိမ်ထဲနှင့် မရပါက ၃ ကြိမ်အထိ နှိပ်ပါ။</b>
+    </div>
+
     <button class="copy-again-btn" id="copyAgainBtn">📋 စာကို ထပ်မံ ကူးမည်</button>
     <button class="close-btn" onclick="closeModal()">ပိတ်မည်</button>
+  </div>
+</div>
+
+<!-- အသုံးပြုနည်း Modal -->
+<div id="guideModal">
+  <div class="guide-box">
+    <h3>🌸 အသုံးပြုနည်း 🌸</h3>
+
+    <div class="guide-step">
+      <span class="num">1</span>
+      <span>ယခု စာအုပ်များကို ဝယ်လိုပါက <b>ဝယ်မည်</b> button ကို နှိပ်ပါ။</span>
+    </div>
+    <div class="guide-step">
+      <span class="num">2</span>
+      <span><b>Telegram, Viber</b> ကြိုက်ရာ စနစ်ကို ရွေးပါ။ <b>Telegram ကို ပိုမို၍ အကြံပြုပါသည်။</b></span>
+    </div>
+    <div class="guide-step">
+      <span class="num">3</span>
+      <span><b>ဝယ်မည်</b> ကို ရွေးချယ်သည့်အခါ စာအုပ်၏ အချက်အလက်များကို <b>အော်တို copy ကူးပြီးသား</b> ဖြစ်၏။ Telegram, Viber တွင် <b>paste</b> ချပေးရုံသာ ဖြစ်၏။</span>
+    </div>
+    <div class="guide-step">
+      <span class="num">4</span>
+      <span><b>Viber</b> ကို နှိပ်သည့်အခါ <b>တစ်ကြိမ်ထဲနှင့် မရပါက ၃ ကြိမ်အထိ နှိပ်ပါ။</b></span>
+    </div>
+
+    <div class="guide-note">
+      ✨ မှတ်ချက် — စာအုပ်အချက်အလက်များကို clipboard သို့ အလိုအလျောက် ကူးပေးထားပြီးဖြစ်သောကြောင့် chat box တွင် paste လုပ်ရုံသာ လိုအပ်ပါသည်။
+    </div>
+
+    <button class="guide-close-btn" id="guideCloseBtn">ပိတ်မည်</button>
   </div>
 </div>
 
@@ -231,11 +419,16 @@ function renderBooks() {
     return;
   }
   noResult.style.display = 'none';
-  filtered.forEach((book) => {
-    const c1 = book.color1 || '#6b3e1e';
-    const c2 = book.color2 || '#b8860b';
+  filtered.forEach((book, index) => {
+    // ပထမဆုံးကဒ် (အပေါ်ဆုံး) ကို အပြာရောင် သတ်မှတ်
+    const isTopCard = (index === 0 && keyword === '');
+
+    // အပေါ်ဆုံးကဒ်အတွက် အပြာရောင် gradient၊ ကျန်တာအတွက် မူရင်း color
+    const c1 = isTopCard ? '#0d47a1' : (book.color1 || '#6b3e1e');
+    const c2 = isTopCard ? '#42a5f0' : (book.color2 || '#b8860b');
+
     const card = document.createElement('div');
-    card.className = 'book-card';
+    card.className = 'book-card' + (isTopCard ? ' top-card' : '');
     card.innerHTML = `
       <div class="book-cover" style="--c1:${c1}; --c2:${c2};">
         <div class="kanote-frame"></div>
@@ -289,7 +482,7 @@ async function openModal(book) {
     notice.style.background = 'linear-gradient(135deg, #e8f5e9, #c8e6c9)';
     notice.style.borderColor = '#4caf50';
     notice.style.color = '#2e7d32';
-    notice.innerHTML = `<span class="icon">✅</span><span>စာအုပ်အချက်အလက်ကို <b>clipboard ကို ကူးပြီးပါပြီ</b>။ Viber/Telegram ဖွင့်ပြီး chat box မှာ <b>paste</b> လုပ်လိုက်ပါ။</span>`;
+    notice.innerHTML = `<span class="icon">✅</span><span>စာအုပ်အချက်အလက်ကို <b>clipboard ကို ကူးပြီးပါပြီ</b>။ Telegram/Viber ဖွင့်ပြီး chat box မှာ <b>paste</b> လုပ်လိုက်ပါ။</span>`;
   } else {
     notice.style.background = 'linear-gradient(135deg, #fff3e0, #ffe0b2)';
     notice.style.borderColor = '#ff9800';
@@ -368,7 +561,7 @@ document.getElementById('viberBtn').addEventListener('click', () => {
   // Copy can happen right after — doesn't need to block the redirect.
   copyToClipboard(message);
 
-  showToast('📋 Message ကို copy ပြီးပါပြီ။ "Open in Viber?" popup ပေါ်လာရင် Open ကိုနှိပ်ပြီး chat box မှာ paste (Ctrl+V) လုပ်ပါ။တစ်ကြိမ် မရရင် နှစ်ကြိမ် နှိပ်ပါ။', 6000);
+  showToast('📋 Message ကို copy ပြီးပါပြီ။ "Open in Viber?" popup ပေါ်လာရင် Open ကိုနှိပ်ပြီး chat box မှာ paste (Ctrl+V) လုပ်ပါ။ တစ်ကြိမ် မရရင် ၃ ကြိမ်အထိ နှိပ်ပါ။', 6000);
 });
 
 function fallbackCopyDialog(text) {
@@ -398,6 +591,27 @@ function showToast(message, duration = 4000) {
 function escapeHtml(str) {
   return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
+
+/* ===== အသုံးပြုနည်း Modal ဖွင့်/ပိတ် ===== */
+document.getElementById('guideBtn').addEventListener('click', () => {
+  document.getElementById('guideModal').classList.add('show');
+});
+document.getElementById('guideCloseBtn').addEventListener('click', () => {
+  document.getElementById('guideModal').classList.remove('show');
+});
+// နောက်ခံကို နှိပ်လျှင် ပိတ်
+document.getElementById('guideModal').addEventListener('click', e => {
+  if (e.target.id === 'guideModal') {
+    document.getElementById('guideModal').classList.remove('show');
+  }
+});
+// ESC နှိပ်လျှင် ပိတ်
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.getElementById('guideModal').classList.remove('show');
+    document.getElementById('contactModal').classList.remove('show');
+  }
+});
 
 document.getElementById('searchInput').addEventListener('input', renderBooks);
 loadBooks();
